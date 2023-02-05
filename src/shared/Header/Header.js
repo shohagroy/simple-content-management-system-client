@@ -5,16 +5,20 @@ import { FaUserCircle } from "react-icons/fa";
 import { ImHome } from "react-icons/im";
 import { AiOutlineUser } from "react-icons/ai";
 import { FaBloggerB } from "react-icons/fa";
+import { FiLogOut } from "react-icons/fi";
+
+import { useIdToken } from "react-firebase-hooks/auth";
+import auth from "../../Firebase/firebase.config";
+import { signOut } from "firebase/auth";
 
 const Header = () => {
   const [openProfile, setOpenProfile] = useState(false);
   const [toggle, setToggle] = useState(false);
 
-  console.log(toggle);
+  const [user, loading, error] = useIdToken(auth);
 
-  const user = {
-    displayName: "Shohag Roy",
-  };
+  console.log(user, loading, error);
+
   return (
     <div className=" relative ">
       <header className="p-4 border-b bg-white text-primary">
@@ -203,11 +207,16 @@ const Header = () => {
                   </Link>
                 </div>
                 <div className="p-3 hover:bg-gray-100 duration-300 rounded-lg bg-  flex items-center">
-                  <button className="">
-                    <p className="">
-                      <i className="fa-solid p-2 rounded-full bg-gray-200 mr-2 fa-right-from-bracket"></i>
-                      <span>Log Out</span>
-                    </p>
+                  <button
+                    onClick={() => signOut(auth)}
+                    className="flex  items-center w-full"
+                  >
+                    <FiLogOut
+                      size={40}
+                      className="rounded-full bg-gray-200 mr-2 p-2"
+                    />
+
+                    <p className="ml-4">Log Out</p>
                   </button>
                 </div>
               </div>

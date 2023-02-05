@@ -1,7 +1,6 @@
 import React from "react";
 import { AiOutlineEye, AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { FaArrowRight } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import Button from "./Button";
 
 const BlogCard = () => {
