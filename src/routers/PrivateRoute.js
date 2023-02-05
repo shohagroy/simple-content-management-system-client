@@ -2,10 +2,8 @@ import React from "react";
 import { useIdToken } from "react-firebase-hooks/auth";
 import { Navigate, useLocation } from "react-router-dom";
 import auth from "../Firebase/firebase.config";
-// import LoadingLoader from "../Shared/Loaders/LoadingLoader";
 
 const PrivatePouter = ({ children }) => {
-  //   const { user, loader } = useContext(AuthContex);
   const [user, loading] = useIdToken(auth);
 
   const location = useLocation();
