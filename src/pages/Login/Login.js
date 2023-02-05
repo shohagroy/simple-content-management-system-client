@@ -1,30 +1,39 @@
 import React, { useState } from "react";
-import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { GoogleAuthProvider } from "firebase/auth";
 import toast from "react-hot-toast";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 import logo1 from "../../assets/logo.PNG";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import auth from "../../Firebase/firebase.config";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
-  const [authError, setAuthError] = useState("");
-  const [loading, setLoading] = useState(false);
   const [viewPassword, setViewPassword] = useState(false);
+
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
 
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.state?.path?.pathname || "/";
 
-  const handelLogin = (data) => {};
+  if (user) {
+    navigate(path, { location: true });
+  }
+
+  console.log(user);
+  const handelLogin = (data) => {
+    const { email, password } = data;
+    signInWithEmailAndPassword(email, password);
+  };
 
   return (
     <section className=" w-full h-screen flex justify-center items-center">
       <Helmet>
-        <title>Login - WeShare!</title>
+        <title>Login - BlogXton!</title>
       </Helmet>
       <div className="md:h-[70vh] flex  justify-center items-center">
         <div className="w-[100vw] md:w-[500px]  shadow-lg flex flex-col justify-center items-center p-6  rounded-md">
@@ -67,22 +76,12 @@ const Login = () => {
                 onClick={() => setViewPassword(!viewPassword)}
                 className="absolute cursor-pointer duration-300 text-gray-400 hover:text-gray-700 text-xl right-3 top-12"
               >
-                {viewPassword ? (
-                  // <p>
-                  //   <i className="fa-solid fa-eye-slash"></i>
-                  // </p>
-                  <AiFillEyeInvisible />
-                ) : (
-                  <AiFillEye />
-                  // <p>
-                  //   <i className="fa-solid fa-eye"></i>
-                  // </p>
-                )}
+                {viewPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
               </div>
             </div>
             <div>
               <p className="text-center capitalize font-bold text-red-600">
-                {authError}
+                {error}
               </p>
             </div>
             <div className="mt-4">

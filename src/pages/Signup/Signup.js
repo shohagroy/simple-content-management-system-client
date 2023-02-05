@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet";
-import { GoogleAuthProvider, updateProfile } from "firebase/auth";
 import logo1 from "../../assets/logo.PNG";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 import {
   useCreateUserWithEmailAndPassword,
@@ -13,9 +13,6 @@ import {
 import auth from "../../Firebase/firebase.config";
 
 const Signup = () => {
-  // const [authError, setAuthError] = useState("");
-  // const [saveUser, setSaveUser] = useState(false);
-  // const [loading, setLoading] = useState(false);
   const [viewPassword, setViewPassword] = useState(false);
 
   const [createUserWithEmailAndPassword, user, loading, error] =
@@ -50,7 +47,7 @@ const Signup = () => {
   return (
     <section className="max-w-7xl mx-auto">
       <Helmet>
-        <title>Create New Account - WeShare!</title>
+        <title>Create New Account - BlogXton!</title>
       </Helmet>
       <div className="w-full h-screen flex  justify-center items-center">
         <div className="w-[100vw] md:w-[500px]  shadow-lg flex flex-col justify-center items-center p-6  rounded-md">
@@ -130,15 +127,7 @@ const Signup = () => {
                 onClick={() => setViewPassword(!viewPassword)}
                 className="absolute cursor-pointer duration-300 text-gray-400 hover:text-gray-700 text-xl right-3 top-12"
               >
-                {viewPassword ? (
-                  <p>
-                    <i className="fa-solid fa-eye-slash"></i>
-                  </p>
-                ) : (
-                  <p>
-                    <i className="fa-solid fa-eye"></i>
-                  </p>
-                )}
+                {viewPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
               </div>
             </div>
             <div>

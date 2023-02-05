@@ -224,7 +224,7 @@ const Header = () => {
           ) : (
             <div className="py-10">
               <Link
-                to="/"
+                to="/login"
                 onClick={() => setOpenProfile(!openProfile)}
                 className="py-3 border text-xl font-bold border-primary my-2 hover:bg-primary hover:text-white duration-300 rounded-lg bg-white flex shadow-lg justify-center items-center"
               >
@@ -232,7 +232,7 @@ const Header = () => {
               </Link>
 
               <Link
-                to="/"
+                to="/signup"
                 onClick={() => setOpenProfile(!openProfile)}
                 className="py-3  border text-xl font-bold border-primary my-2 hover:bg-primary hover:text-white duration-300 rounded-lg bg-white flex shadow-lg justify-center items-center"
               >
@@ -389,7 +389,7 @@ const Header = () => {
             ) : (
               <div className="py-10">
                 <Link
-                  to="/"
+                  to="/login"
                   onClick={() => setOpenProfile(!openProfile)}
                   className="py-3 border text-xl font-bold border-primary my-2 hover:bg-primary hover:text-white duration-300 rounded-lg bg-white flex shadow-lg justify-center items-center"
                 >
@@ -397,7 +397,7 @@ const Header = () => {
                 </Link>
 
                 <Link
-                  to="/"
+                  to="/signup"
                   onClick={() => setOpenProfile(!openProfile)}
                   className="py-3  border text-xl font-bold border-primary my-2 hover:bg-primary hover:text-white duration-300 rounded-lg bg-white flex shadow-lg justify-center items-center"
                 >
