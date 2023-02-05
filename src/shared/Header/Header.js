@@ -17,7 +17,7 @@ const Header = () => {
 
   const [user, loading, error] = useIdToken(auth);
 
-  console.log(user, loading, error);
+  // console.log(user, loading, error);
 
   return (
     <div className=" relative ">
