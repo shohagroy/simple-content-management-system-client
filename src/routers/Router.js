@@ -1,5 +1,6 @@
-import DashBord from "../layouts/DashBord";
+import DashBordLayout from "../layouts/DashBordLayout";
 import CreateBlog from "../pages/CreateBlog/CreateBlog";
+import Dashbord from "../pages/Dashbord/Dashbord";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
 import PrivatePouter from "./PrivateRoute";
@@ -23,18 +24,18 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          <PrivatePouter>
-            <Home />
-          </PrivatePouter>
-        ),
+        element: <Home />,
       },
       {
         path: "/dashbord",
-        element: <DashBord />,
+        element: <DashBordLayout />,
         children: [
           {
-            path: "/dashbord/add-new-blog",
+            path: "/dashbord",
+            element: <Dashbord />,
+          },
+          {
+            path: "/dashbord/create-new-blog",
             element: <CreateBlog />,
           },
         ],
