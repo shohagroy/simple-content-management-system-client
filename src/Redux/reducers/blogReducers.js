@@ -4,7 +4,7 @@ const initialState = {
   blogs: [],
 };
 
-const productReducer = (state = initialState, action) => {
+const blogReducer = (state = initialState, action) => {
   console.log(state);
   switch (action.type) {
     case POSTBLOG:
@@ -17,4 +17,4 @@ const productReducer = (state = initialState, action) => {
   }
 };
 
-export default productReducer;
+export default blogReducer;

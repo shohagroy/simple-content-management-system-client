@@ -1,5 +1,5 @@
 import DashBordLayout from "../layouts/DashBordLayout";
-import CreateBlog from "../pages/CreateBlog/CreateBlog";
+import CreateBlog from "../pages/Dashbord/CreateBlog/CreateBlog";
 import Dashbord from "../pages/Dashbord/Dashbord";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";

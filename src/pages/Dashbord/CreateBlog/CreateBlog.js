@@ -5,17 +5,37 @@ import QuillToolbar, { modules, formats } from "./EditorToolbar";
 import { RiBarChartHorizontalFill } from "react-icons/ri";
 import { BsTools } from "react-icons/bs";
 import { useDispatch } from "react-redux";
-import { POSTBLOG } from "../../Redux/actionTypes/actionTypes";
+import { POSTBLOG } from "../../../Redux/actionTypes/actionTypes";
+import { useIdToken } from "react-firebase-hooks/auth";
+import auth from "../../../Firebase/firebase.config";
+import blogPublish from "../../../Redux/Thank/Blog/postBlog";
+import { useNavigate } from "react-router-dom";
 
 const CreateBlog = () => {
   const [contant, setContent] = useState({});
   const [blogText, setBlogText] = useState("");
+  const [user, loading, error] = useIdToken(auth);
 
-  console.log(contant);
+  const navigate = useNavigate();
+
+  // console.log(contant);
   const handelChange = (blogText) => {
     setBlogText(blogText);
     setContent({ ...contant, blogText: blogText });
   };
+
+  const newBlog = {
+    ...contant,
+    author: user.displayName,
+    authorEmail: user.email,
+    authorImage: "",
+    postDate: new Date(),
+    view: 0,
+    comment: 0,
+    like: 0,
+  };
+
+  // console.log(newBlog);
 
   const dispatch = useDispatch();
 
@@ -102,7 +122,10 @@ const CreateBlog = () => {
             </div>
             <div className="w-full mt-3 flex justify-center items-center ">
               <button
-                onClick={() => dispatch({ type: POSTBLOG, payload: contant })}
+                onClick={() => {
+                  blogPublish(newBlog);
+                  navigate("/dashbord");
+                }}
                 className="bg-blue-300 hover:bg-blue-600 px-8 rounded-md py-2 font-bold duration-300 text-white"
               >
                 Publish

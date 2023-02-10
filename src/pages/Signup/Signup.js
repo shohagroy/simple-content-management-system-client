@@ -8,12 +8,15 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 import {
   useCreateUserWithEmailAndPassword,
+  useIdToken,
   useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import auth from "../../Firebase/firebase.config";
+import createUser from "../../MiddlewareFunction/createUser";
 
 const Signup = () => {
   const [viewPassword, setViewPassword] = useState(false);
+  // const [user, loading, error] = useIdToken(auth);
 
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
@@ -28,16 +31,18 @@ const Signup = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.state?.path?.pathname || "/";
-  if (user) {
-    navigate(path, { location: true });
-  }
 
   const handelSignUp = (data) => {
     const { name, email, password } = data;
 
-    createUserWithEmailAndPassword(email, password).then((user) => {
-      if (user?.operationType) {
-        updateProfile({ displayName: name });
+    createUserWithEmailAndPassword(email, password).then((info) => {
+      if (info?.operationType) {
+        updateProfile({ displayName: name }).then((update) => {
+          if (update === true) {
+            createUser(name, email);
+            navigate(path, { location: true });
+          }
+        });
       }
     });
   };
