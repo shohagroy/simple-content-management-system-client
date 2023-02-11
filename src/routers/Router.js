@@ -1,4 +1,5 @@
 import DashBordLayout from "../layouts/DashBordLayout";
+import BlogFullView from "../pages/BlogFullView/BlogFullView";
 import CreateBlog from "../pages/Dashbord/CreateBlog/CreateBlog";
 import Dashbord from "../pages/Dashbord/Dashbord";
 import Login from "../pages/Login/Login";
@@ -25,6 +26,12 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/blog/:id",
+        loader: ({ params }) =>
+          fetch(`${process.env.REACT_APP_SERVER_URL}/blog/${params.id}`),
+        element: <BlogFullView />,
       },
       {
         path: "/dashbord",

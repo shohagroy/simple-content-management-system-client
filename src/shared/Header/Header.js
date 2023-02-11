@@ -93,7 +93,9 @@ const Header = () => {
 
       {/* toggle menu */}
       <div
-        className={` top-[8vh] right-0  ${toggleMenu ? "absolute" : "hidden"}`}
+        className={` top-[8vh] z-50 shadow-lg right-0  ${
+          toggleMenu ? "absolute" : "hidden"
+        }`}
       >
         <ul
           onClick={() => setToggleMenu(!toggleMenu)}
