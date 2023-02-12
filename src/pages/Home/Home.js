@@ -1,41 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import BlogCard from "../../components/BlogCard";
 import Button from "../../components/Button";
-import DisplayCard from "../../components/DisplayCard";
+import firstToLast from "../../Redux/actions/firstToLast";
 
 const Home = () => {
-  const [posts, setPosts] = useState(null);
-  const [status, setStatus] = useState("");
+  const [sortByView, setSortByView] = useState("firstTolast");
 
-  useEffect(() => {
-    setPosts("loading");
-    fetch(`${process.env.REACT_APP_SERVER_URL}/all-post`)
-      .then((res) => res.json())
-      .then((data) => {
-        setPosts(data);
-        console.log(data);
-      })
-      .catch((err) => {
-        console.error(err);
-        setPosts("error");
-      });
-  }, []);
+  const dispatch = useDispatch();
+
+  if (sortByView === "firstTolast") {
+    dispatch(firstToLast());
+  }
+
+  const { blogs } = useSelector((state) => state.postBlog);
 
   let content;
 
-  if (posts === "loading") {
-    console.log("loading");
+  if (!blogs.length) {
     content = (
       <h1 className="w-full text-center font-bold text-3xl">Loading...</h1>
     );
-  } else if (posts === "error") {
-    content = (
-      <h1 className="w-full text-center font-bold text-3xl">
-        Something want wrong!
-      </h1>
-    );
   } else {
-    content = <BlogCard posts={posts} />;
+    content = <BlogCard posts={blogs} />;
   }
 
   return (
@@ -62,12 +49,11 @@ const Home = () => {
           <div className="flex items-center">
             <p>Sort by View:</p>
             <select
+              onChange={(e) => setSortByView(e.target.value)}
               className="px-4 py-2 text-gray-500 bg-white ml-3 rounded-md"
-              name=""
-              id=""
             >
-              <option value="">First Upload</option>
-              <option value="">Last Upload</option>
+              <option value="firstTolast">First Upload</option>
+              <option value="lastTofirst">Last Upload</option>
             </select>
           </div>
           <div className="flex  items-center font-bold">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.PNG";
 import { AiOutlineBars, AiOutlineMessage } from "react-icons/ai";
@@ -12,10 +12,27 @@ import { AiOutlineDashboard } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineLogout } from "react-icons/ai";
 import { signOut } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { LOGIN } from "../../Redux/actionTypes/actionTypes";
+import getBlogs from "../../Redux/actions/getBlogs";
+import getComments from "../../Redux/actions/getComments";
 
 const Header = () => {
   const [user, loading, error] = useIdToken(auth);
   const [toggleMenu, setToggleMenu] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getBlogs());
+    dispatch(getComments());
+  }, [dispatch]);
+
+  const authInfo = { user, loading, error };
+
+  useEffect(() => {
+    dispatch({ type: LOGIN, payload: authInfo });
+  }, [authInfo, dispatch]);
 
   const navMenu = (
     <div className="flex justify-center items-center">

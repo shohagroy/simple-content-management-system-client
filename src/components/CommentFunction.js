@@ -1,24 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import postComment from "../Redux/actions/postComment";
 
-const CommentFunction = ({ post }) => {
+const CommentFunction = ({ post, id }) => {
   const [commentLoading, setCommentLoading] = useState(false);
 
-  const {
-    data: comments = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["feedsData"],
-    queryFn: async () => {
-      const res = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/postComments?id=${post._id}`
-      );
-      const data = await res.json();
-      return data;
-    },
-  });
+  const { user, loading, error } = useSelector(
+    (state) => state.loginUser.userAuth
+  );
+
+  const dispatch = useDispatch();
+
+  const { comments } = useSelector((state) => state.postBlog);
+  const postComments = comments.filter((comment) => comment.postId === id);
 
   const commentHandelar = (e) => {
     setCommentLoading(true);
@@ -30,31 +25,13 @@ const CommentFunction = ({ post }) => {
     const postId = post._id;
     const commentDate = new Date();
 
-    const postComment = { comment, userEmail, userName, postId, commentDate };
+    const publicComment = { comment, userEmail, userName, postId, commentDate };
 
-    fetch(`${process.env.REACT_APP_SERVER_URL}/postComment`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(postComment),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setCommentLoading(false);
-        refetch();
-        form.comment.value = "";
-        form.userName.value = "";
-        form.userEmail.value = "";
-        console.log(data);
-      })
-      .catch((err) => {
-        setCommentLoading(false);
-        form.comment.value = "";
-        form.userName.value = "";
-        form.userEmail.value = "";
-        console.error(err);
-      });
+    dispatch(postComment(publicComment));
+
+    form.comment.value = "";
+    form.userName.value = "";
+    form.userEmail.value = "";
   };
   return (
     <div>
@@ -80,6 +57,7 @@ const CommentFunction = ({ post }) => {
           <input
             type="text"
             name="userName"
+            value={user?.displayname}
             required
             className="w-full border p-2 my-1 border-black"
             placeholder="Name (Require)"
@@ -88,6 +66,7 @@ const CommentFunction = ({ post }) => {
             type="email"
             name="userEmail"
             required
+            defaultValue={user?.email}
             className="w-full border p-2 my-1 border-black"
             placeholder="Email (Require)"
           />
@@ -101,14 +80,14 @@ const CommentFunction = ({ post }) => {
       </div>
 
       {/* comment card */}
-      {comments?.length > 0 && (
+      {postComments?.length > 0 && (
         <div className="w-full">
           <p className="text-xl">
-            <span className="font-bold">{comments.length}</span> comment to "
-            <span className="font-bold">{post.blogName}</span>"
+            <span className="font-bold">{postComments.length}</span> comment to
+            "<span className="font-bold">{post.blogName}</span>"
           </p>
 
-          {comments?.map((comment) => (
+          {postComments?.map((comment) => (
             <div
               key={comment._id}
               className="w-full bg-white shadow-md border md:p-3 mt-2 rounded-md"
@@ -125,7 +104,9 @@ const CommentFunction = ({ post }) => {
               </div>
               <p>
                 {" "}
-                <small>{new Date(comment.commentDate).toLocaleString()} </small>
+                <small>
+                  {new Date(comment?.commentDate).toLocaleString()}{" "}
+                </small>
               </p>
 
               <p className="font-serif py-2">{comment.comment}</p>
