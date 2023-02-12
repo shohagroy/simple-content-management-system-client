@@ -1,4 +1,4 @@
-const firstToLast = () => {
+const lastToFirst = () => {
   return (dispatch, getStore) => {
     const { postBlog } = getStore();
     const { blogs } = postBlog;
@@ -6,9 +6,9 @@ const firstToLast = () => {
     blogs.sort((a, b) => {
       const dateA = new Date(a.postDate);
       const dateB = new Date(b.postDate);
-      return dateB - dateA;
+      return dateA - dateB;
     });
   };
 };
 
-export default firstToLast;
+export default lastToFirst;

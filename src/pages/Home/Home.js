@@ -1,28 +1,39 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BlogCard from "../../components/BlogCard";
-import Button from "../../components/Button";
 import firstToLast from "../../Redux/actions/firstToLast";
+import lastToFirst from "../../Redux/actions/lastToFirst";
+import todaysPick from "../../Redux/actions/todaysPick";
+import tradindPost from "../../Redux/actions/tredingPost";
 
 const Home = () => {
   const [sortByView, setSortByView] = useState("firstTolast");
-
   const dispatch = useDispatch();
 
   if (sortByView === "firstTolast") {
     dispatch(firstToLast());
+  } else {
+    dispatch(lastToFirst());
   }
 
-  const { blogs } = useSelector((state) => state.postBlog);
+  const { viewPost, todayPost, trendingPost } = useSelector(
+    (state) => state.postBlog
+  );
 
   let content;
 
-  if (!blogs.length) {
+  console.log(viewPost);
+
+  if (!viewPost.length) {
     content = (
       <h1 className="w-full text-center font-bold text-3xl">Loading...</h1>
     );
+  } else if (viewPost === "No data found!") {
+    content = (
+      <h1 className="w-full text-center font-bold text-3xl">No data found!</h1>
+    );
   } else {
-    content = <BlogCard posts={blogs} />;
+    content = <BlogCard posts={viewPost} />;
   }
 
   return (
@@ -57,20 +68,27 @@ const Home = () => {
             </select>
           </div>
           <div className="flex  items-center font-bold">
-            <Button>Today’s Pick</Button>
-            <Button>Trending</Button>
+            <button
+              onClick={() => dispatch(todaysPick())}
+              className={`py-2 hover:text-white text-primary px-4 border border-primary duration-300 hover:bg-primary rounded-lg m-2 ${
+                todayPost && "bg-primary text-white"
+              }`}
+            >
+              Today’s Pick
+            </button>
+
+            <button
+              onClick={() => dispatch(tradindPost())}
+              className={`py-2 hover:text-white text-primary px-4 border border-primary duration-300 hover:bg-primary rounded-lg m-2 ${
+                trendingPost && "bg-primary text-white"
+              }`}
+            >
+              Trending
+            </button>
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center">
-        {/* {[1, 1, 1, 1, 1, 1].map((post, i) => (
-          <div className="">
-            <BlogCard key={i} />
-            <DisplayCard key={i} />
-          </div>
-        ))} */}
-        {content}
-      </div>
+      <div className="flex flex-col items-center">{content}</div>
     </section>
   );
 };
