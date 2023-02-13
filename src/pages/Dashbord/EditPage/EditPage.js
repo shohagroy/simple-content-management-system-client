@@ -46,7 +46,6 @@ const EditPage = () => {
   };
 
   const submitedUpdate = () => {
-    console.log("button click");
     if (!contant.blogName) {
       toast.error("Please Modify Blog Name!");
       return;
@@ -66,7 +65,6 @@ const EditPage = () => {
       return;
     }
 
-    console.log("dubble click");
     dispatch(updatePost(updated));
     navigate("/dashbord");
   };

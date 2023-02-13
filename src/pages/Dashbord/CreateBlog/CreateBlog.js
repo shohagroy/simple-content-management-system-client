@@ -10,6 +10,7 @@ import { useIdToken } from "react-firebase-hooks/auth";
 import auth from "../../../Firebase/firebase.config";
 import blogPublish from "../../../Redux/Thank/Blog/postBlog";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const CreateBlog = () => {
   const [contant, setContent] = useState({});
@@ -38,6 +39,32 @@ const CreateBlog = () => {
   // console.log(newBlog);
 
   const dispatch = useDispatch();
+
+  const blogPublishHandelar = () => {
+    if (!contant.blogName) {
+      toast.error("Please Enter Blog Name!");
+      return;
+    }
+    if (!contant.blogText) {
+      toast.error("Please Enter Blog Text!");
+      return;
+    }
+
+    if (!contant.image) {
+      toast.error("Please Enter Blog Image!");
+      return;
+    }
+
+    if (!contant.tags) {
+      toast.error("Please Enter Blog Tags!");
+      return;
+    }
+
+    // navigate("/dashbord");
+
+    console.log("button click");
+    dispatch(blogPublish(newBlog));
+  };
 
   return (
     <section className="p-2 w-100  ">
@@ -122,10 +149,11 @@ const CreateBlog = () => {
             </div>
             <div className="w-full mt-3 flex justify-center items-center ">
               <button
-                onClick={() => {
-                  blogPublish(newBlog);
-                  navigate("/dashbord");
-                }}
+                onClick={blogPublishHandelar}
+                // onClick={() => {
+
+                //   // navigate("/dashbord");
+                // }}
                 className="bg-blue-300 hover:bg-blue-600 px-8 rounded-md py-2 font-bold duration-300 text-white"
               >
                 Publish
