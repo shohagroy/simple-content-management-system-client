@@ -1,13 +1,15 @@
+import { LASTTOFIRST } from "../actionTypes/actionTypes";
+
 const lastToFirst = () => {
   return (dispatch, getStore) => {
     const { postBlog } = getStore();
-    const { blogs } = postBlog;
+    const { viewPost } = postBlog;
 
-    blogs.sort((a, b) => {
-      const dateA = new Date(a.postDate);
-      const dateB = new Date(b.postDate);
-      return dateA - dateB;
-    });
+    if (viewPost === "No data found!") {
+      return;
+    }
+
+    dispatch({ type: LASTTOFIRST });
   };
 };
 

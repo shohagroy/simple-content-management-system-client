@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BlogCard from "../../components/BlogCard";
 import firstToLast from "../../Redux/actions/firstToLast";
@@ -7,22 +7,23 @@ import todaysPick from "../../Redux/actions/todaysPick";
 import tradindPost from "../../Redux/actions/tredingPost";
 
 const Home = () => {
-  const [sortByView, setSortByView] = useState("firstTolast");
+  const [sortByView, setSortByView] = useState("");
   const dispatch = useDispatch();
-
-  if (sortByView === "firstTolast") {
-    dispatch(firstToLast());
-  } else {
-    dispatch(lastToFirst());
-  }
 
   const { viewPost, todayPost, trendingPost } = useSelector(
     (state) => state.postBlog
   );
 
-  let content;
+  useEffect(() => {
+    console.log(sortByView);
+    if (sortByView === "firstTolast") {
+      dispatch(firstToLast());
+    } else {
+      dispatch(lastToFirst());
+    }
+  }, [sortByView, dispatch]);
 
-  console.log(viewPost);
+  let content;
 
   if (!viewPost.length) {
     content = (
@@ -64,7 +65,9 @@ const Home = () => {
               className="px-4 py-2 text-gray-500 bg-white ml-3 rounded-md"
             >
               <option value="firstTolast">First Upload</option>
-              <option value="lastTofirst">Last Upload</option>
+              <option selected value="lastTofirst">
+                Last Upload
+              </option>
             </select>
           </div>
           <div className="flex  items-center font-bold">

@@ -10,6 +10,8 @@ const todaysPick = () => {
           new Date(blog.postDate).toDateString() === new Date().toDateString()
       );
 
+      console.log(posts);
+
       if (!posts.length) {
         dispatch({ type: TODAYSPICK, payload: "No data found!" });
       } else {

@@ -6,3 +6,5 @@ export const POSTCOMMENT = "POSTCOMMENT";
 export const GETCOMMENTS = "GETCOMMENTS";
 export const TODAYSPICK = "TODAYSPICK";
 export const TRENDING = "TRENDING";
+export const LASTTOFIRST = "LASTTOFIRST";
+export const FIRSTTOLAST = "FIRSTTOLAST";

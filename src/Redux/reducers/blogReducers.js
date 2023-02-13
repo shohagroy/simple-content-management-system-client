@@ -1,6 +1,8 @@
 import {
+  FIRSTTOLAST,
   GETBLOGS,
   GETCOMMENTS,
+  LASTTOFIRST,
   POSTBLOG,
   POSTCOMMENT,
   TODAYSPICK,
@@ -27,6 +29,25 @@ const blogReducer = (state = initialState, action) => {
         viewPost: action.payload,
         blogs: action.payload,
       };
+    case FIRSTTOLAST:
+      return {
+        ...state,
+        viewPost: state.blogs.sort(
+          (a, b) => new Date(b.postDate) - new Date(a.postDate)
+        ),
+        todayPost: false,
+        trendingPost: false,
+      };
+
+    case LASTTOFIRST:
+      return {
+        ...state,
+        viewPost: state.blogs.sort(
+          (a, b) => new Date(a.postDate) - new Date(b.postDate)
+        ),
+        todayPost: false,
+        trendingPost: false,
+      };
 
     case TODAYSPICK:
       return {
@@ -37,10 +58,9 @@ const blogReducer = (state = initialState, action) => {
       };
 
     case TRENDING:
-      console.log(state.blogs.sort((a, b) => b.view - a.view));
       return {
         ...state,
-        viewPost: state.blogs.sort((a, b) => b.view - a.view),
+        viewPost: [...state.blogs.sort((a, b) => b.view - a.view)],
         todayPost: false,
         trendingPost: true,
       };
