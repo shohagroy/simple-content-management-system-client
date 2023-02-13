@@ -8,36 +8,18 @@ import { useDispatch, useSelector } from "react-redux";
 import dashbordCallData from "../../Redux/actions/dashbord/dashbordDataCall";
 
 const Dashbord = () => {
-  const { userAuth } = useSelector((state) => state.loginUser);
-
   const dispatch = useDispatch();
-  const { dashbord, loginUser } = useSelector((state) => state);
+  const { dashbord, postBlog, loginUser } = useSelector((state) => state);
 
-  // console.log(dashbord, loginUser);
+  console.log(loginUser.userAuth);
 
   const { dashbordData } = dashbord;
 
-  console.log(dashbordData);
-
-  // const totalLike = dashbordData.reduce(
-  //   (post, value) => {
-  //     parseInt(post.view) + value, 0}
-  // );
-
-  // console.log(totalLike);
-
-  if (dashbordData.length) {
-    const totalView = dashbordData.reduce(
-      (value, post) => value + parseInt(post.view),
-      0
-    );
-
-    console.log(totalView);
-  }
-
   useEffect(() => {
-    dispatch(dashbordCallData());
-  }, [dispatch]);
+    if (loginUser.userAuth) {
+      dispatch(dashbordCallData(loginUser.userAuth));
+    }
+  }, [dispatch, loginUser]);
 
   return (
     <div className="w-full grid grid-cols-8">
@@ -99,8 +81,8 @@ const Dashbord = () => {
           <p className=" font-bold text-xl">Resent Comment</p>
         </div>
 
-        {[1, 1, 1, 1, 1].map((comment) => (
-          <div className="rounded-md bg-white m-2 shadow-lg p-4 flex">
+        {[1, 1, 1, 1, 1].map((comment, i) => (
+          <div key={i} className="rounded-md bg-white m-2 shadow-lg p-4 flex">
             <img
               className="w-[80px] h-[80px] rounded-xl"
               src="https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg"

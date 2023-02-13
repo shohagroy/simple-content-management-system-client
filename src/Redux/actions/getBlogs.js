@@ -3,7 +3,7 @@ import { GETBLOGS } from "../actionTypes/actionTypes";
 
 const getBlogs = () => {
   return async (dispatch, getStore) => {
-    const res = await axios(`${process.env.REACT_APP_SERVER_URL}/all-post`);
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/all-post`);
     const data = await res.data;
 
     if (data.length) {

@@ -1,16 +1,17 @@
-import axios from "axios";
 import { DASHBORDCALLDATA } from "../../actionTypes/actionTypes";
 
-const dashbordCallData = () => {
+const dashbordCallData = (user) => {
   return async (dispatch, getStore) => {
-    const { loginUser } = getStore();
-    const { email } = loginUser.userAuth;
+    const { postBlog } = getStore();
 
-    const res = await axios.get(
-      `${process.env.REACT_APP_SERVER_URL}/dashbord-data?email=${email}`
-    );
-    const data = res.data;
-    dispatch({ type: DASHBORDCALLDATA, payload: data });
+    if (postBlog.blogs.length) {
+      const authorBlog = postBlog?.blogs.filter(
+        (blog) => blog.authorEmail === user.email
+      );
+
+      console.log(authorBlog);
+      dispatch({ type: DASHBORDCALLDATA, payload: authorBlog });
+    }
   };
 };
 

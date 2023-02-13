@@ -7,29 +7,21 @@ import { RiBarChartHorizontalFill } from "react-icons/ri";
 import { BsTools } from "react-icons/bs";
 import QuillToolbar, { formats, modules } from "../CreateBlog/EditorToolbar";
 import ReactQuill from "react-quill";
-import blogPublish from "../../../Redux/Thank/Blog/postBlog";
 import updatePost from "../../../Redux/actions/dashbord/updatePost";
+import toast from "react-hot-toast";
 
 const EditPage = () => {
   const [contant, setContent] = useState({});
   const [blogText, setBlogText] = useState("");
-  const [user, loading, error] = useIdToken(auth);
 
   const postId = window.location.pathname.split("/")[3];
 
   const { postBlog, loginUser } = useSelector((state) => state);
 
-  const { displayName, email } = loginUser.userAuth;
-
-  console.log(postBlog.blogs);
-
   const selectedPost = postBlog?.blogs.find((blog) => blog._id === postId);
-
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
-  // console.log(contant);
   const handelChange = (blogText) => {
     setBlogText(blogText);
     setContent({ ...contant, blogText: blogText });
@@ -51,6 +43,32 @@ const EditPage = () => {
     comment: selectedPost?.comment,
     like: selectedPost?.like,
     _id: selectedPost?._id,
+  };
+
+  const submitedUpdate = () => {
+    console.log("button click");
+    if (!contant.blogName) {
+      toast.error("Please Modify Blog Name!");
+      return;
+    }
+    if (!contant.blogText) {
+      toast.error("Please Modify Blog Text!");
+      return;
+    }
+
+    if (!contant.image) {
+      toast.error("Please Modify Blog Image!");
+      return;
+    }
+
+    if (!contant.tags) {
+      toast.error("Please Modify Blog Tags!");
+      return;
+    }
+
+    console.log("dubble click");
+    dispatch(updatePost(updated));
+    navigate("/dashbord");
   };
 
   return (
@@ -139,10 +157,7 @@ const EditPage = () => {
             </div>
             <div className="w-full mt-3 flex justify-center items-center ">
               <button
-                onClick={() => {
-                  dispatch(updatePost(updated));
-                  //   navigate("/dashbord");
-                }}
+                onClick={submitedUpdate}
                 className="bg-blue-300 hover:bg-blue-600 px-8 rounded-md py-2 font-bold duration-300 text-white"
               >
                 Publish

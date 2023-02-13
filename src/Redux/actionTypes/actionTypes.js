@@ -13,3 +13,5 @@ export const SIGNUP = "SIGNUP";
 export const GETUSER = "GETUSER";
 export const DASHBORDCALLDATA = "DASHBORDCALLDATA";
 export const UPDATEPOSTDATA = "UPDATEPOSTDATA";
+
+export const DELETEDPOST = "DELETEDPOST";

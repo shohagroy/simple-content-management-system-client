@@ -1,8 +1,11 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import deletedPost from "../pages/Dashbord/EditPage/deletedPost";
 
 const PostTable = ({ posts }) => {
-  console.log(posts);
+  const dispatch = useDispatch();
+
   return (
     <div>
       <div className="overflow-x-auto">
@@ -42,7 +45,10 @@ const PostTable = ({ posts }) => {
                   >
                     Edit
                   </Link>
-                  <button className="btn btn-sm bg-red-600  text-white ml-2">
+                  <button
+                    onClick={() => dispatch(deletedPost(data._id))}
+                    className="btn btn-sm bg-red-600  text-white ml-2"
+                  >
                     deleted
                   </button>
                 </td>

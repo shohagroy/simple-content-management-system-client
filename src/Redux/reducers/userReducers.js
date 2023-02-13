@@ -7,6 +7,7 @@ const initialState = {
 const userReducers = (state = initialState, action) => {
   switch (action.type) {
     case GETUSER:
+      console.log(action.payload);
       return {
         ...state,
         userAuth: action.payload,
