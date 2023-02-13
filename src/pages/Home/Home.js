@@ -15,7 +15,6 @@ const Home = () => {
   );
 
   useEffect(() => {
-    console.log(sortByView);
     if (sortByView === "firstTolast") {
       dispatch(firstToLast());
     } else {
@@ -42,10 +41,10 @@ const Home = () => {
       <div className="max-w-[1200px] mx-auto ">
         <div className="flex justify-center md:justify-end md:my-3 ">
           <div className="text-gray-500 md:font-semibold">
-            <button className="bg-primary/10 text-primary rounded-md m-1 md:px-4 p-1 ">
+            <button className="m-1 md:px-4 p-1 text-gray-500">
               Technical Blog
             </button>
-            <button className="m-1 md:px-4 p-1 text-gray-500 ">
+            <button className="bg-primary/10 text-primary rounded-md m-1 md:px-4 p-1 ">
               Tutorial Blog
             </button>
             <button className="m-1 md:px-4 p-1 text-gray-500 ">
@@ -54,9 +53,12 @@ const Home = () => {
             <button className="m-1 md:px-4 p-1 text-gray-500 ">All</button>
           </div>
         </div>
+
         <h2 className="w-full px-4  py-2 md:text-lg bg-white rounded-md font-bold">
-          4 items found for category Entertainment!
+          {viewPost === "No data found!" ? 0 : viewPost.length} items found for
+          Tutorial Blog!
         </h2>
+
         <div className="flex  flex-col-reverse md:flex-row justify-center items-center  md:justify-between p-4">
           <div className="flex items-center">
             <p>Sort by View:</p>

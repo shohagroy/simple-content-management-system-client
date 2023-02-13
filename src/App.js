@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import "./App.css";
@@ -9,6 +10,7 @@ function App() {
     <div className="App">
       <Provider store={store}>
         <RouterProvider router={router} />
+        <Toaster />
       </Provider>
     </div>
   );

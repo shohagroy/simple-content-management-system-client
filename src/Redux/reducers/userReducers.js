@@ -1,4 +1,4 @@
-import { LOGIN } from "../actionTypes/actionTypes";
+import { GETUSER } from "../actionTypes/actionTypes";
 
 const initialState = {
   userAuth: {},
@@ -6,11 +6,10 @@ const initialState = {
 
 const userReducers = (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN:
-      //   console.log(action);
+    case GETUSER:
       return {
         ...state,
-        userAuth: { user: action.payload },
+        userAuth: action.payload,
       };
 
     default:

@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { LOGIN } from "../../Redux/actionTypes/actionTypes";
 import getBlogs from "../../Redux/actions/getBlogs";
 import getComments from "../../Redux/actions/getComments";
+import getUser from "../../Redux/actions/ueserAction/getUser";
 
 const Header = () => {
   const [user, loading, error] = useIdToken(auth);
@@ -26,7 +27,8 @@ const Header = () => {
   useEffect(() => {
     dispatch(getBlogs());
     dispatch(getComments());
-  }, [dispatch]);
+    dispatch(getUser(user));
+  }, [dispatch, user]);
 
   const authInfo = { user, loading, error };
 

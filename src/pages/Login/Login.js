@@ -24,7 +24,6 @@ const Login = () => {
     navigate(path, { location: true });
   }
 
-  console.log(user);
   const handelLogin = (data) => {
     const { email, password } = data;
     signInWithEmailAndPassword(email, password);

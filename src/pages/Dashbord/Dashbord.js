@@ -1,15 +1,48 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { HiUserGroup } from "react-icons/hi";
 import { BsFillFileEarmarkPostFill } from "react-icons/bs";
-import { AiFillLike, AiOutlineLineChart } from "react-icons/ai";
+import { AiOutlineLineChart } from "react-icons/ai";
 import { FcLike } from "react-icons/fc";
 import PostTable from "../../components/PostTable";
+import { useDispatch, useSelector } from "react-redux";
+import dashbordCallData from "../../Redux/actions/dashbord/dashbordDataCall";
 
 const Dashbord = () => {
+  const { userAuth } = useSelector((state) => state.loginUser);
+
+  const dispatch = useDispatch();
+  const { dashbord, loginUser } = useSelector((state) => state);
+
+  // console.log(dashbord, loginUser);
+
+  const { dashbordData } = dashbord;
+
+  console.log(dashbordData);
+
+  // const totalLike = dashbordData.reduce(
+  //   (post, value) => {
+  //     parseInt(post.view) + value, 0}
+  // );
+
+  // console.log(totalLike);
+
+  if (dashbordData.length) {
+    const totalView = dashbordData.reduce(
+      (value, post) => value + parseInt(post.view),
+      0
+    );
+
+    console.log(totalView);
+  }
+
+  useEffect(() => {
+    dispatch(dashbordCallData());
+  }, [dispatch]);
+
   return (
     <div className="w-full grid grid-cols-8">
       <div className=" col-span-6">
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 gap-4 ">
           <div className="flex justify-center shadow-md p-4 items-center bg-white rounded-md m-3">
             <HiUserGroup
               size={60}
@@ -27,7 +60,7 @@ const Dashbord = () => {
               className="p-2 bg-orange-400/20 text-orange-500 rounded-md"
             />
             <div className="text-center ml-4">
-              <p className="text-2xl font-bold">120</p>
+              <p className="text-2xl font-bold">{dashbordData.length}</p>
               <p>Post</p>
             </div>
           </div>
@@ -49,18 +82,24 @@ const Dashbord = () => {
               className="p-2 bg-blue-400/20 text-blue-500 rounded-md"
             />
             <div className="text-center ml-4">
-              <p className="text-2xl font-bold">32K</p>
-              <p>Viewer</p>
+              <p className="text-2xl font-bold">
+                {dashbordData?.reduce(
+                  (value, post) => value + parseInt(post.view),
+                  0
+                )}
+              </p>
+              <p>Total View</p>
             </div>
           </div>
         </div>
       </div>
+
       <div className="w-full bg-white row-span-2 col-span-2 p-2">
         <div className="px-4">
-          <p className="text-2xl font-bold text-xl">Resent Comment</p>
+          <p className=" font-bold text-xl">Resent Comment</p>
         </div>
 
-        {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((comment) => (
+        {[1, 1, 1, 1, 1].map((comment) => (
           <div className="rounded-md bg-white m-2 shadow-lg p-4 flex">
             <img
               className="w-[80px] h-[80px] rounded-xl"
@@ -75,8 +114,8 @@ const Dashbord = () => {
           </div>
         ))}
       </div>
-      <div className="w-full  col-span-6 p-4">
-        <PostTable />
+      <div className="w-full   col-span-6 p-4">
+        <PostTable posts={dashbordData} />
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import DashBordLayout from "../layouts/DashBordLayout";
 import BlogFullView from "../pages/BlogFullView/BlogFullView";
 import CreateBlog from "../pages/Dashbord/CreateBlog/CreateBlog";
 import Dashbord from "../pages/Dashbord/Dashbord";
+import EditPage from "../pages/Dashbord/EditPage/EditPage";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
 import PrivatePouter from "./PrivateRoute";
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
           {
             path: "/dashbord/create-new-blog",
             element: <CreateBlog />,
+          },
+          {
+            path: "/dashbord/update-blog/:id",
+            element: <EditPage />,
           },
         ],
       },

@@ -7,6 +7,7 @@ import {
   POSTCOMMENT,
   TODAYSPICK,
   TRENDING,
+  UPDATEPOSTDATA,
 } from "../actionTypes/actionTypes";
 
 const initialState = {
@@ -74,6 +75,14 @@ const blogReducer = (state = initialState, action) => {
       return {
         ...state,
         comments: [...state.comments, action.payload],
+      };
+
+    case UPDATEPOSTDATA:
+      console.log(action.payload);
+      return {
+        ...state,
+        blogs: action.payload,
+        viewPost: action.payload,
       };
     default:
       return state;
