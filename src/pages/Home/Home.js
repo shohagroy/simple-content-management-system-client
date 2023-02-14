@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import BlogCard from "../../components/BlogCard";
 import firstToLast from "../../Redux/actions/firstToLast";
 import lastToFirst from "../../Redux/actions/lastToFirst";
@@ -37,7 +38,7 @@ const Home = () => {
   }
 
   return (
-    <section className="h-screen bg-gray-100 w-full p-2 overflow-y-scroll no-scrollbar ">
+    <section className="h-screen bg-gray-100 relative w-full p-2 overflow-y-scroll no-scrollbar ">
       <div className="max-w-[1200px] mx-auto ">
         <div className="flex justify-center md:justify-end md:my-3 ">
           <div className="text-gray-500 md:font-semibold">
@@ -90,6 +91,13 @@ const Home = () => {
             >
               Trending
             </button>
+
+            <Link
+              to="/reading-history"
+              className={`py-2 hover:text-white text-primary px-4 border border-primary duration-300 hover:bg-primary rounded-lg m-2 `}
+            >
+              Reading history
+            </Link>
           </div>
         </div>
       </div>

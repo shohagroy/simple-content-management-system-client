@@ -4,6 +4,7 @@ import CreateBlog from "../pages/Dashbord/CreateBlog/CreateBlog";
 import Dashbord from "../pages/Dashbord/Dashbord";
 import EditPage from "../pages/Dashbord/EditPage/EditPage";
 import Login from "../pages/Login/Login";
+import ReadingHistory from "../pages/ReadingHistory/ReadingHistory";
 import Signup from "../pages/Signup/Signup";
 import PrivatePouter from "./PrivateRoute";
 
@@ -28,6 +29,12 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+
+      {
+        path: "/reading-history",
+        element: <ReadingHistory />,
+      },
+
       {
         path: "/blog/:id",
         loader: ({ params }) =>

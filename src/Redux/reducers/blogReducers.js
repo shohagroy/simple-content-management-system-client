@@ -6,6 +6,7 @@ import {
   LASTTOFIRST,
   POSTBLOG,
   POSTCOMMENT,
+  READINGHISTORY,
   TODAYSPICK,
   TRENDING,
   UPDATEPOSTDATA,
@@ -15,6 +16,7 @@ const initialState = {
   blogs: [],
   comments: [],
   viewPost: [],
+  readingBlog: [],
 };
 
 const blogReducer = (state = initialState, action) => {
@@ -90,6 +92,11 @@ const blogReducer = (state = initialState, action) => {
         ...state,
         blogs: action.payload,
         viewPost: action.payload,
+      };
+    case READINGHISTORY:
+      return {
+        ...state,
+        readingBlog: action.payload,
       };
     default:
       return state;

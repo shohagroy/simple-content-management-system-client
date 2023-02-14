@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import CommentFunction from "../../components/CommentFunction";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import readingHistory from "../../Redux/actions/readingHistory";
 
 const BlogFullView = () => {
   const { blogs } = useSelector((state) => state.postBlog);
   const blogId = window.location.pathname.split("/")[2];
 
   const selectBlog = blogs.find((blog) => blog._id === blogId);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (blogId) {
+      dispatch(readingHistory(selectBlog));
+    }
+  }, [selectBlog, dispatch, blogId]);
 
   return (
     <div className="max-w-[800px]  mx-auto">

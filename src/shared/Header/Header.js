@@ -24,13 +24,10 @@ const Header = () => {
 
   const dispatch = useDispatch();
 
-  console.log(user);
-
   useEffect(() => {
     dispatch(getBlogs());
     dispatch(getComments());
     dispatch(getUser(user));
-    console.log("header data call");
   }, [dispatch, user]);
 
   const authInfo = { user, loading, error };
