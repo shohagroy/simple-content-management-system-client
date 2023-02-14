@@ -1,14 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import postComment from "../Redux/actions/postComment";
 
 const CommentFunction = ({ post, id }) => {
-  const [commentLoading, setCommentLoading] = useState(false);
-
-  const { user, loading, error } = useSelector(
-    (state) => state.loginUser.userAuth
-  );
+  const { user } = useSelector((state) => state.loginUser.userAuth);
 
   const dispatch = useDispatch();
 
@@ -16,7 +12,6 @@ const CommentFunction = ({ post, id }) => {
   const postComments = comments.filter((comment) => comment.postId === id);
 
   const commentHandelar = (e) => {
-    setCommentLoading(true);
     e.preventDefault();
     const form = e.target;
     const comment = form.comment.value;
@@ -73,7 +68,7 @@ const CommentFunction = ({ post, id }) => {
 
           <div className="w-full flex justify-end my-2">
             <button className="py-2 px-6 hover:bg-primary hover:text-white duration-300 rounded-md border">
-              {commentLoading ? "Please Wait..." : "Post Comment"}
+              Post Comment
             </button>
           </div>
         </form>

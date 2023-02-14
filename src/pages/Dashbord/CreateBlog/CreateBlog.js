@@ -5,7 +5,6 @@ import QuillToolbar, { modules, formats } from "./EditorToolbar";
 import { RiBarChartHorizontalFill } from "react-icons/ri";
 import { BsTools } from "react-icons/bs";
 import { useDispatch } from "react-redux";
-import { POSTBLOG } from "../../../Redux/actionTypes/actionTypes";
 import { useIdToken } from "react-firebase-hooks/auth";
 import auth from "../../../Firebase/firebase.config";
 import blogPublish from "../../../Redux/Thank/Blog/postBlog";
@@ -15,7 +14,7 @@ import toast from "react-hot-toast";
 const CreateBlog = () => {
   const [contant, setContent] = useState({});
   const [blogText, setBlogText] = useState("");
-  const [user, loading, error] = useIdToken(auth);
+  const [user] = useIdToken(auth);
 
   const navigate = useNavigate();
 
@@ -60,10 +59,9 @@ const CreateBlog = () => {
       return;
     }
 
+    dispatch(blogPublish(newBlog, navigate));
+    // setContent({});
     // navigate("/dashbord");
-
-    console.log("button click");
-    dispatch(blogPublish(newBlog));
   };
 
   return (

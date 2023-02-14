@@ -1,4 +1,5 @@
 import {
+  CREATEPOST,
   FIRSTTOLAST,
   GETBLOGS,
   GETCOMMENTS,
@@ -23,6 +24,13 @@ const blogReducer = (state = initialState, action) => {
       return {
         ...state,
         blogs: [...state.blogs, action.payload],
+      };
+    case CREATEPOST:
+      return {
+        ...state,
+        blogs: action.payload.updateData,
+        viewPost: action.payload.updateData,
+        dashbordData: action.payload.userDashbordData,
       };
     case GETBLOGS:
       return {
@@ -78,7 +86,6 @@ const blogReducer = (state = initialState, action) => {
       };
 
     case UPDATEPOSTDATA:
-      console.log(action.payload);
       return {
         ...state,
         blogs: action.payload,
